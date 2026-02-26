@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Morning Briefing – February 26, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1a1f2e 0%, #16213e 100%);
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .header .greeting {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #63b3ed;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #f7fafc;
+      margin-bottom: 6px;
+    }
+    .header .date {
+      font-size: 15px;
+      color: #a0aec0;
+    }
+
+    /* Cards */
+    .card {
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f7fafc;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2d3748;
+    }
+    .card-title .icon {
+      font-size: 22px;
+    }
+
+    /* Weather */
+    .weather-main {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+    .weather-temp {
+      font-size: 52px;
+      font-weight: 700;
+      color: #63b3ed;
+      line-height: 1;
+    }
+    .weather-details { flex: 1; }
+    .weather-condition {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+    .weather-meta {
+      font-size: 13px;
+      color: #a0aec0;
+      line-height: 1.7;
+    }
+    .weather-alert {
+      background: #2d2020;
+      border: 1px solid #742a2a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #fc8181;
+      margin-bottom: 16px;
+    }
+    .forecast-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .forecast-day {
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .forecast-day .day-name {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #718096;
+      margin-bottom: 4px;
+    }
+    .forecast-day .day-icon { font-size: 20px; margin: 4px 0; }
+    .forecast-day .day-high { font-size: 16px; font-weight: 700; color: #63b3ed; }
+    .forecast-day .day-low { font-size: 12px; color: #718096; }
+
+    /* News */
+    .news-item {
+      padding: 14px 0;
+      border-bottom: 1px solid #2d3748;
+    }
+    .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .news-tag {
+      display: inline-block;
+      background: #2a4365;
+      color: #63b3ed;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .news-headline {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .news-summary {
+      font-size: 13px;
+      color: #a0aec0;
+      line-height: 1.5;
+    }
+
+    /* Xbox */
+    .xbox-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #2d3748;
+      align-items: flex-start;
+    }
+    .xbox-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .xbox-num {
+      background: #107C10;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .xbox-content .xbox-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+    .xbox-content .xbox-desc {
+      font-size: 13px;
+      color: #a0aec0;
+      line-height: 1.5;
+    }
+
+    /* XRP */
+    .xrp-price-block {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+    .xrp-logo {
+      font-size: 36px;
+    }
+    .xrp-price {
+      font-size: 38px;
+      font-weight: 700;
+      color: #68d391;
+    }
+    .xrp-change {
+      font-size: 14px;
+      color: #68d391;
+      font-weight: 600;
+    }
+    .xrp-meta {
+      font-size: 13px;
+      color: #a0aec0;
+      line-height: 1.7;
+    }
+    .xrp-news-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #2d3748;
+    }
+    .xrp-news-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .xrp-news-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 3px;
+    }
+    .xrp-news-body {
+      font-size: 13px;
+      color: #a0aec0;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #4a5568;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 24px; }
+      .weather-temp { font-size: 40px; }
+      .xrp-price { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="greeting">Good Morning</div>
+    <h1>☀️ Hey Mike!</h1>
+    <div class="date">Thursday, February 26, 2026 &nbsp;·&nbsp; 8:00 AM EST &nbsp;·&nbsp; Markham, ON</div>
+  </div>
+
+  <!-- Weather -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌡️</span> Weather – Markham, Ontario</div>
+    <div class="weather-main">
+      <div class="weather-temp">-2°C</div>
+      <div class="weather-details">
+        <div class="weather-condition">Mix of Sun & Cloud</div>
+        <div class="weather-meta">
+          Feels like -9°C (wind chill) &nbsp;·&nbsp; Wind: W at 21 km/h, gusts to 37 km/h<br/>
+          Humidity: 61% &nbsp;·&nbsp; Visibility: 16 km<br/>
+          Today's High: -2°C &nbsp;·&nbsp; Tonight's Low: -15°C
+        </div>
+      </div>
+    </div>
+    <div class="weather-alert">
+      ⚠️ <strong>Cold weather advisory:</strong> Bundle up — coat, hat, gloves, and scarf advised. Risk of frostbite and hypothermia for prolonged outdoor exposure.
+    </div>
+    <div class="forecast-row">
+      <div class="forecast-day">
+        <div class="day-name">Today</div>
+        <div class="day-icon">🌤️</div>
+        <div class="day-high">-2°C</div>
+        <div class="day-low">-15°C</div>
+      </div>
+      <div class="forecast-day">
+        <div class="day-name">Fri</div>
+        <div class="day-icon">🌤️</div>
+        <div class="day-high">4°C</div>
+        <div class="day-low">0°C</div>
+      </div>
+      <div class="forecast-day">
+        <div class="day-name">Sat</div>
+        <div class="day-icon">🌨️</div>
+        <div class="day-high">3°C</div>
+        <div class="day-low">-11°C</div>
+      </div>
+      <div class="forecast-day">
+        <div class="day-name">Sun</div>
+        <div class="day-icon">❄️</div>
+        <div class="day-high">-7°C</div>
+        <div class="day-low">-16°C</div>
+      </div>
+      <div class="forecast-day">
+        <div class="day-name">Mon</div>
+        <div class="day-icon">⛅</div>
+        <div class="day-high">-6°C</div>
+        <div class="day-low">-12°C</div>
+      </div>
+      <div class="forecast-day">
+        <div class="day-name">Tue</div>
+        <div class="day-icon">🌨️</div>
+        <div class="day-high">0°C</div>
+        <div class="day-low">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top News -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📰</span> Top News Headlines</div>
+
+    <div class="news-item">
+      <div class="news-tag">🇺🇸 U.S. Politics</div>
+      <div class="news-headline">Trump delivers 2026 State of the Union address</div>
+      <div class="news-summary">President Trump delivered his annual State of the Union, with live fact-checking coverage and a Democratic response from Gov. Spanberger. A "People's State of the Union" rally was also held by Democratic lawmakers.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">🌍 Trade</div>
+      <div class="news-headline">Trump's 10% global tariff takes effect</div>
+      <div class="news-summary">A sweeping 10% global tariff signed by President Trump kicked in on February 24th, active for up to 150 days without congressional approval for an extension, rattling global markets.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">🇺🇦 Ukraine</div>
+      <div class="news-headline">Russian drone strike kills 15 mineworkers in Dnipro</div>
+      <div class="news-summary">A Russian drone struck a minibus transporting mineworkers in Dnipro, Ukraine, killing at least 15 people and injuring seven others in one of the deadliest single attacks in recent weeks.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">🚀 Space</div>
+      <div class="news-headline">NASA Artemis II faces further delays — April launch possible</div>
+      <div class="news-summary">New complications may push the Artemis II lunar mission past its March 6 target, potentially requiring the rocket to roll back to the Vehicle Assembly Building for additional tests.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">❄️ Weather</div>
+      <div class="news-headline">Historic Northeast snowstorm — strongest in a decade</div>
+      <div class="news-summary">A powerful snowstorm dumped more than 2 feet of snow across the U.S. Northeast, the region's strongest storm in over 10 years according to meteorologists.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">🎵 Entertainment</div>
+      <div class="news-headline">Grammys: Kendrick Lamar makes history; Spielberg earns EGOT</div>
+      <div class="news-summary">Kendrick Lamar won five Grammys, surpassing Jay-Z as the most awarded hip-hop artist ever. Steven Spielberg became the 22nd competitive EGOT winner after taking Best Music Film.</div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-tag">🏈 Sports</div>
+      <div class="news-headline">Seattle Seahawks win Super Bowl; Walker III named MVP</div>
+      <div class="news-summary">The Seattle Seahawks defeated the New England Patriots 29–13. Running back Kenneth Walker III was awarded MVP — the first RB to receive the honour in 28 years.</div>
+    </div>
+  </div>
+
+  <!-- Xbox News -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🎮</span> Trending Xbox News</div>
+
+    <div class="xbox-item">
+      <div class="xbox-num">1</div>
+      <div class="xbox-content">
+        <div class="xbox-title">February 2026 Xbox System Update — 1440p Cloud Streaming Arrives</div>
+        <div class="xbox-desc">Xbox Game Pass Ultimate members can now stream games at up to 1440p on Xbox Series X|S and Xbox One X/S. The update also adds new PC app navigation sounds and ROG Xbox Ally storage formatting improvements.</div>
+      </div>
+    </div>
+
+    <div class="xbox-item">
+      <div class="xbox-num">2</div>
+      <div class="xbox-content">
+        <div class="xbox-title">Resident Evil Requiem launches today on Xbox Series X|S</div>
+        <div class="xbox-desc">The latest Resident Evil entry drops February 26, featuring FBI analyst Grace Ashcroft and the return of Leon S. Kennedy in a new survival horror experience optimized for Xbox Series X|S.</div>
+      </div>
+    </div>
+
+    <div class="xbox-item">
+      <div class="xbox-num">3</div>
+      <div class="xbox-content">
+        <div class="xbox-title">Game Pass additions: Kingdom Come II, The Witcher 3, College Football 26 & more</div>
+        <div class="xbox-desc">A stacked February wave brings Kingdom Come: Deliverance II, The Witcher 3: Wild Hunt Complete Edition, and EA Sports College Football 26 to Game Pass, alongside Avowed's new Patch with New Game+ and Photo Mode.</div>
+      </div>
+    </div>
+
+    <div class="xbox-item">
+      <div class="xbox-num">4</div>
+      <div class="xbox-content">
+        <div class="xbox-title">Next-gen Xbox hardware teased — "announcements coming soon"</div>
+        <div class="xbox-desc">New Xbox head Asha Sharma hinted in an interview that next-gen console hardware announcements are "coming up very soon," generating significant buzz ahead of a potential reveal.</div>
+      </div>
+    </div>
+
+    <div class="xbox-item">
+      <div class="xbox-num">5</div>
+      <div class="xbox-content">
+        <div class="xbox-title">Marathon Server Slam open preview starts today</div>
+        <div class="xbox-desc">Bungie's Marathon kicks off its Server Slam open preview weekend today (Feb 26 – Mar 2) on Xbox Series X|S, PS5, and Steam, with cross-play and cross-save supported ahead of its March 5 launch.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- XRP -->
+  <div class="card">
+    <div class="card-title"><span class="icon">💰</span> XRP – Price &amp; News</div>
+
+    <div class="xrp-price-block">
+      <div class="xrp-logo">🪙</div>
+      <div>
+        <div class="xrp-price">$1.47 USD</div>
+        <div class="xrp-change">▲ +8.4% (24h) &nbsp;·&nbsp; 24h High: $1.47 &nbsp;·&nbsp; Low: $1.34</div>
+        <div class="xrp-meta">
+          Market Cap: ~$89.2B &nbsp;·&nbsp; Rank: #4 &nbsp;·&nbsp; Volume (24h): $3.82B<br/>
+          Circulating Supply: 61.02B XRP &nbsp;·&nbsp; ATH: $3.65 (Jul 18, 2025)
+        </div>
+      </div>
+    </div>
+
+    <div class="xrp-news-item">
+      <div class="xrp-news-title">📉 February has been rough — but XRP rebounds 6–8%</div>
+      <div class="xrp-news-body">XRP crashed over 30% in February, briefly hitting a 15-month low of $1.16 during "Black Sunday II," a mass liquidation event. However, XRP is recovering strongly today (+8.4%) as retail buying surges and ETF inflows remain positive at ~$1.1B in net assets.</div>
+    </div>
+
+    <div class="xrp-news-item">
+      <div class="xrp-news-title">🏦 Standard Chartered cuts 2026 target to $2.80 — but raises 2030 target to $28</div>
+      <div class="xrp-news-body">Standard Chartered reduced its near-term XRP target by 65% to $2.80, citing fading institutional enthusiasm. However, the bank raised its 2030 target to $28, implying nearly 19x upside from current levels.</div>
+    </div>
+
+    <div class="xrp-news-item">
+      <div class="xrp-news-title">📈 Analysts see bull signals — Q4 breakout predicted</div>
+      <div class="xrp-news-body">Multiple analysts are flagging bullish on-chain signals similar to those seen before the 2024 breakout, including rising exchange inflows on Binance. Grok AI predicts XRP could reach $8 by year-end, with most expecting a full bull run to begin in Q4 2026.</div>
+    </div>
+
+    <div class="xrp-news-item">
+      <div class="xrp-news-title">⚖️ SEC litigation officially over — XRP confirmed not a security</div>
+      <div class="xrp-news-body">The SEC and Ripple jointly dismissed all remaining appeals in August 2025, formally ending nearly 5 years of litigation. The ruling confirmed XRP is not a security when traded on public exchanges, clearing a major regulatory overhang.</div>
+    </div>
+
+    <div style="margin-top:14px; padding: 10px 14px; background: #1a2a1a; border: 1px solid #276227; border-radius:8px; font-size:12px; color:#68d391;">
+      ⚠️ <strong>Disclaimer:</strong> Crypto prices are highly volatile. This is for informational purposes only and does not constitute financial or investment advice.
+    </div>
+  </div>
+
+  <div class="footer">
+    Generated by Claude · Morning Briefing for Mike · February 26, 2026<br/>
+    Sources: Environment Canada · Wikipedia Current Events · Xbox Wire · CoinMarketCap · CoinDesk · BlockchainReporter
+  </div>
+
+</div>
+</body>
+</html>
