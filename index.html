@@ -905,43 +905,37 @@
 
   function drawCloud(c){
     var x=c.x, y=c.y, w=c.w, h=c.h;
+    var op=c.opacity;
 
-    // Build a cluster of blob positions spread naturally across the cloud shape
+    // Large overlapping blobs — single ultra-soft gradient each, no concentric layers
     var blobs = [
-      // base row — wide, low, overlapping
-      { bx: x-w*0.30, by: y+h*0.10, r: h*0.52 },
-      { bx: x-w*0.14, by: y+h*0.12, r: h*0.50 },
-      { bx: x,        by: y+h*0.10, r: h*0.54 },
-      { bx: x+w*0.14, by: y+h*0.12, r: h*0.50 },
-      { bx: x+w*0.30, by: y+h*0.10, r: h*0.52 },
-      // upper row — slightly smaller, raised
-      { bx: x-w*0.22, by: y-h*0.12, r: h*0.46 },
-      { bx: x-w*0.06, by: y-h*0.18, r: h*0.48 },
-      { bx: x+w*0.06, by: y-h*0.18, r: h*0.48 },
-      { bx: x+w*0.22, by: y-h*0.12, r: h*0.46 },
-      // top cap
-      { bx: x,        by: y-h*0.30, r: h*0.38 },
+      { bx: x-w*0.32, by: y+h*0.08, r: h*0.70 },
+      { bx: x-w*0.16, by: y+h*0.10, r: h*0.72 },
+      { bx: x,        by: y+h*0.08, r: h*0.76 },
+      { bx: x+w*0.16, by: y+h*0.10, r: h*0.72 },
+      { bx: x+w*0.32, by: y+h*0.08, r: h*0.70 },
+      { bx: x-w*0.24, by: y-h*0.10, r: h*0.62 },
+      { bx: x-w*0.08, by: y-h*0.16, r: h*0.66 },
+      { bx: x+w*0.08, by: y-h*0.16, r: h*0.66 },
+      { bx: x+w*0.24, by: y-h*0.10, r: h*0.62 },
+      { bx: x,        by: y-h*0.28, r: h*0.54 },
     ];
 
     blobs.forEach(function(b) {
-      // Draw each blob as 3 concentric feathered layers for a truly soft look
-      var layers = [
-        { scale: 1.0,  alpha: 0.13 * c.opacity },
-        { scale: 0.72, alpha: 0.22 * c.opacity },
-        { scale: 0.44, alpha: 0.30 * c.opacity },
-        { scale: 0.22, alpha: 0.22 * c.opacity },
-      ];
-      layers.forEach(function(l) {
-        var r = b.r * l.scale;
-        var grd = ctx.createRadialGradient(b.bx, b.by, 0, b.bx, b.by, r);
-        grd.addColorStop(0,   'rgba(242,248,255,' + l.alpha + ')');
-        grd.addColorStop(0.4, 'rgba(228,240,252,' + (l.alpha*0.75) + ')');
-        grd.addColorStop(1,   'rgba(210,230,248,0)');
-        ctx.beginPath();
-        ctx.arc(b.bx, b.by, r, 0, Math.PI*2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-      });
+      var r = b.r;
+      var grd = ctx.createRadialGradient(b.bx, b.by, 0, b.bx, b.by, r);
+      // Single smooth falloff — very low peak alpha, fades completely by edge
+      // Extra intermediate stops make it cubic-smooth with zero visible banding
+      var pk = 0.09 * op;
+      grd.addColorStop(0,    'rgba(240,248,255,' + pk + ')');
+      grd.addColorStop(0.25, 'rgba(238,246,255,' + (pk*0.85) + ')');
+      grd.addColorStop(0.55, 'rgba(230,242,255,' + (pk*0.45) + ')');
+      grd.addColorStop(0.80, 'rgba(222,238,255,' + (pk*0.12) + ')');
+      grd.addColorStop(1,    'rgba(215,235,255,0)');
+      ctx.beginPath();
+      ctx.arc(b.bx, b.by, r, 0, Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
     });
   }
 
