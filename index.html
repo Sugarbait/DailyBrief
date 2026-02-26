@@ -119,6 +119,27 @@
     .news-headline { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
     .news-summary { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
 
+    /* ── AI News ── */
+    .ai-item { padding: 13px 0; border-bottom: 1px solid #2d3748; }
+    .ai-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .ai-badge.western  { background: #2d1f4a; color: #b794f4; }
+    .ai-badge.chinese  { background: #1f2d3a; color: #63b3ed; }
+    .ai-badge.industry { background: #2a3a1f; color: #68d391; }
+    .ai-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
+    .ai-body  { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
     /* ── Xbox ── */
     .xbox-item { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid #2d3748; align-items: flex-start; }
     .xbox-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -460,6 +481,85 @@
       <div class="news-tag">🏈 Sports</div>
       <div class="news-headline">Seattle Seahawks win Super Bowl; Walker III named MVP</div>
       <div class="news-summary">The Seahawks defeated the Patriots 29–13. Kenneth Walker III was named MVP — the first running back to receive the honour in 28 years.</div>
+    </div>
+  </div>
+
+  <!-- AI News -->
+  <div class="card">
+    <div class="card-title">🤖 Trending AI News</div>
+
+    <!-- Western Labs -->
+    <div class="ai-item">
+      <div class="ai-badge western">🟠 Anthropic · Claude</div>
+      <div class="ai-title">Claude 4 (Opus 4 & Sonnet 4) launches — claims world's best coding model</div>
+      <div class="ai-body">Anthropic released Claude 4 with autonomous multi-hour task capability and top coding benchmarks. The company is targeting $15B in revenue for 2026, narrowing its valuation gap with OpenAI to roughly 2x.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge western">🟢 OpenAI · ChatGPT</div>
+      <div class="ai-title">ChatGPT Deep Research launches; OpenAI eyes $30B revenue in 2026</div>
+      <div class="ai-body">OpenAI rolled out Deep Research — an agent that browses the web for up to 30 minutes to produce cited reports. It also signed a Disney licensing deal for Sora video generation and hit $20B ARR.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge western">🔵 Google · Gemini</div>
+      <div class="ai-title">Gemini 3 Flash rolls out globally; Apple partners with Google for AI Siri</div>
+      <div class="ai-body">Google's Gemini 3 is receiving rave reviews and outperforming rivals in several benchmarks. Apple is integrating Google's 1.2 trillion parameter Gemini model into a new AI-powered Siri via Private Cloud Compute.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge western">⚫ xAI · Grok</div>
+      <div class="ai-title">Grok-3 launches; Musk merges SpaceX with xAI</div>
+      <div class="ai-body">Grok-3 arrives with enhanced reasoning and image analysis for X Premium+ users. Musk announced a SpaceX–xAI merger to embed Grok into spacecraft and Mars colony development. California AG demands xAI stop deepfake content generation.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge western">🟣 Mistral · Le Chat</div>
+      <div class="ai-title">Mistral's Le Chat generates up to 1,000 words per second</div>
+      <div class="ai-body">Mistral released Le Chat, an AI assistant boasting industry-leading inference speed of up to 1,000 words per second, alongside the open-weight Mistral 3 model release.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge western">🔷 Microsoft · Copilot</div>
+      <div class="ai-title">Copilot gets multi-agent orchestration; Microsoft faces ACCC lawsuit</div>
+      <div class="ai-body">Microsoft unveiled multi-agent Copilot at Build, allowing it to coordinate specialized AI agent teams. Meanwhile, Australia's ACCC sued Microsoft over a 45% price hike tied to Copilot bundling, affecting ~2.7M customers.</div>
+    </div>
+
+    <!-- Chinese Labs -->
+    <div class="ai-item">
+      <div class="ai-badge chinese">🌊 Moonshot AI · Kimi K2.5</div>
+      <div class="ai-title">Kimi K2.5 matches Claude Opus at 1/7th the price — 1 trillion parameters</div>
+      <div class="ai-body">Moonshot AI's Kimi K2.5 features a Mixture-of-Experts architecture with Agent Swarm tech — coordinating up to 100 AI sub-agents in parallel, cutting long-horizon task time by 4.5x. Moonshot became China's fastest decacorn.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge chinese">🔶 Alibaba · Qwen 3.5</div>
+      <div class="ai-title">Qwen 3.5 brings native multimodality at 1/18th the cost of Gemini Pro</div>
+      <div class="ai-body">Qwen3.5-Plus unifies vision and language in a single model at just $0.12/million input tokens. The Qwen family has overtaken Meta's Llama as the most downloaded model series on Hugging Face.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge chinese">🟦 MiniMax · M2.5</div>
+      <div class="ai-title">MiniMax M2.5 hits 3 trillion tokens in first 7 days — usage surges 197%</div>
+      <div class="ai-body">The world's first production-grade agent-native model launched February 13, priced at $0.30/million tokens (vs $5.00 for Claude Opus 4). MiniMax now leads OpenRouter with 2.45 trillion tokens processed.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge chinese">⬛ Z.AI · GLM-5</div>
+      <div class="ai-title">GLM-5 tops Artificial Analysis Intelligence Index as best open-weight model</div>
+      <div class="ai-body">Z.AI's GLM-5 focuses on autonomous software development — planning, coding, debugging, and iterating without human input. Launch demand was so high it overwhelmed infrastructure, forcing Z.AI to issue a public apology and throttle access.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge industry">⚖️ Industry · Controversy</div>
+      <div class="ai-title">Anthropic & OpenAI accuse DeepSeek, MiniMax, Moonshot of "industrial-scale" distillation</div>
+      <div class="ai-body">Anthropic alleges Chinese AI firms created 24,000+ fake accounts and used 16M+ Claude exchanges to train their models. OpenAI separately flagged "obfuscated" distillation of its frontier models to U.S. legislators. Chinese labs deny wrongdoing.</div>
+    </div>
+
+    <div class="ai-item">
+      <div class="ai-badge industry">📊 Industry · Market Share</div>
+      <div class="ai-title">Chinese LLMs now capture 61% of global token volume on OpenRouter</div>
+      <div class="ai-body">MiniMax M2.5, Kimi K2.5, and GLM-5 are the top 3 models by token usage globally. The AI race in 2026 is defined by massive investment ($200B+ from Amazon, $175B from Google, $145B from Microsoft) and a shift toward agentic AI.</div>
     </div>
   </div>
 
