@@ -140,6 +140,32 @@
     .ai-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
     .ai-body  { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
 
+    /* ── Tech News ── */
+    .tech-item { padding: 13px 0; border-bottom: 1px solid #2d3748; }
+    .tech-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .tech-badge.apple   { background: #2a2a2a; color: #e2e8f0; }
+    .tech-badge.nvidia  { background: #1a2e1a; color: #76e4a6; }
+    .tech-badge.samsung { background: #1a1f3a; color: #90cdf4; }
+    .tech-badge.intel   { background: #2a1f1a; color: #fbb6ce; }
+    .tech-badge.amd     { background: #2d1a1a; color: #fc8181; }
+    .tech-badge.tesla   { background: #2a1a1a; color: #f6ad55; }
+    .tech-badge.meta    { background: #1a2040; color: #76e4f7; }
+    .tech-badge.general { background: #2a2a1a; color: #fefcbf; }
+    .tech-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
+    .tech-body  { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
     /* ── Xbox ── */
     .xbox-item { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid #2d3748; align-items: flex-start; }
     .xbox-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -560,6 +586,59 @@
       <div class="ai-badge industry">📊 Industry · Market Share</div>
       <div class="ai-title">Chinese LLMs now capture 61% of global token volume on OpenRouter</div>
       <div class="ai-body">MiniMax M2.5, Kimi K2.5, and GLM-5 are the top 3 models by token usage globally. The AI race in 2026 is defined by massive investment ($200B+ from Amazon, $175B from Google, $145B from Microsoft) and a shift toward agentic AI.</div>
+    </div>
+  </div>
+
+  <!-- Tech News -->
+  <div class="card">
+    <div class="card-title">💻 Tech World News</div>
+
+    <div class="tech-item">
+      <div class="tech-badge apple">🍎 Apple</div>
+      <div class="tech-title">iPhone 17e, new iPads & MacBook dropping March 2–4 — 5 products in 3 days</div>
+      <div class="tech-body">Apple's first big 2026 launch wave hits next week. The iPhone 17e gets Dynamic Island, MagSafe, and a new chip. iOS 26.4 brings an upgraded Siri, with a deeper Google Gemini integration coming at WWDC in June. A foldable iPhone is also planned for later in 2026.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge nvidia">🟩 Nvidia</div>
+      <div class="tech-title">Nvidia's "Feynman" chip jumps to TSMC's 1.6nm A16 — leapfrogs Apple in line</div>
+      <div class="tech-body">Nvidia is set to skip 2nm entirely and go straight to TSMC's most advanced A16 process for its next-gen Feynman AI GPU, potentially edging out Apple as TSMC's top customer. RTX 50 series supply is also down 30–40% as Samsung and SK Hynix prioritize AI data center chips.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge samsung">🔷 Samsung</div>
+      <div class="tech-title">Samsung unveils Galaxy Book 6, creaseless foldable OLED & iPhone Fold display</div>
+      <div class="tech-body">At CES 2026, Samsung launched the Galaxy Book 6 with 30-hour battery life. Samsung Display debuted the brightest OLED panel yet and a creaseless foldable screen reportedly destined for Apple's upcoming foldable iPhone. Its Taylor, Texas fab begins 2026 risk production.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge intel">🔴 Intel</div>
+      <div class="tech-title">Intel ships first 18A chips from Arizona — Apple & Nvidia in foundry talks</div>
+      <div class="tech-body">Intel's Fab 52 in Chandler, AZ now makes the most advanced chips ever manufactured in the U.S. Apple and Nvidia are reportedly in talks to shift some chip production to Intel's 18A/14A nodes by 2028, driven by tariff risks and geopolitics. The Trump administration holds a 10% stake in Intel.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge amd">🔴 AMD</div>
+      <div class="tech-title">AMD launches Ryzen AI 400 series and FSR 4 with AI-powered upscaling</div>
+      <div class="tech-body">Lisa Su unveiled the Ryzen AI 400 at CES 2026, pushing AMD further into AI-powered PCs. FSR 4 brings machine learning-based image reconstruction to RDNA 3.5 cards, directly challenging Nvidia's DLSS 4.5 which now enables 4K path-tracing at 240 fps.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge tesla">⚡ Tesla</div>
+      <div class="tech-title">Tesla repurposes U.S. factory for Optimus robots — analysts call it Tesla's "iPhone moment"</div>
+      <div class="tech-body">Tesla is converting a major U.S. facility to full Optimus humanoid robot production. Analysts are comparing the potential impact to the iPhone's effect on Apple. Tesla CarPlay integration is delayed due to needed iOS 26 Maps changes from Apple's side.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge meta">🔵 Meta</div>
+      <div class="tech-title">Meta Ray-Ban Gen 2 AI glasses momentum builds alongside Apple's wearable AI push</div>
+      <div class="tech-body">Meta's Ray-Ban smart glasses continue gaining traction in the AI wearables race. The four big tech hyperscalers — Microsoft, Meta, Alphabet, and Amazon — are projected to spend over $470B on AI infrastructure in 2026, up from $350B in 2025.</div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-badge general">🌐 Industry</div>
+      <div class="tech-title">Big Tech AI capex hits $470B in 2026 — returns now under the microscope</div>
+      <div class="tech-body">As AI infrastructure spending surges to record levels across Microsoft, Meta, Alphabet, and Amazon, Wall Street is shifting focus from "how much are you spending?" to "what are you getting back?" Pressure is mounting on all major players to show AI ROI.</div>
     </div>
   </div>
 
