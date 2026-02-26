@@ -904,35 +904,45 @@
   }
 
   function drawCloud(c){
-    ctx.save();
-    ctx.globalAlpha = c.opacity;
     var x=c.x, y=c.y, w=c.w, h=c.h;
 
-    // Each puff drawn separately so they blend softly without deformation
-    var puffs = [
-      { dx: 0,       dy: 0,        rx: w*0.38, ry: h*0.38 }, // centre body
-      { dx: -w*0.28, dy: h*0.06,   rx: w*0.26, ry: h*0.28 }, // left base
-      { dx:  w*0.28, dy: h*0.06,   rx: w*0.26, ry: h*0.28 }, // right base
-      { dx: -w*0.16, dy: -h*0.22,  rx: w*0.22, ry: h*0.26 }, // upper-left puff
-      { dx:  w*0.16, dy: -h*0.22,  rx: w*0.22, ry: h*0.26 }, // upper-right puff
-      { dx:  0,      dy: -h*0.3,   rx: w*0.18, ry: h*0.22 }, // top centre puff
+    // Build a cluster of blob positions spread naturally across the cloud shape
+    var blobs = [
+      // base row — wide, low, overlapping
+      { bx: x-w*0.30, by: y+h*0.10, r: h*0.52 },
+      { bx: x-w*0.14, by: y+h*0.12, r: h*0.50 },
+      { bx: x,        by: y+h*0.10, r: h*0.54 },
+      { bx: x+w*0.14, by: y+h*0.12, r: h*0.50 },
+      { bx: x+w*0.30, by: y+h*0.10, r: h*0.52 },
+      // upper row — slightly smaller, raised
+      { bx: x-w*0.22, by: y-h*0.12, r: h*0.46 },
+      { bx: x-w*0.06, by: y-h*0.18, r: h*0.48 },
+      { bx: x+w*0.06, by: y-h*0.18, r: h*0.48 },
+      { bx: x+w*0.22, by: y-h*0.12, r: h*0.46 },
+      // top cap
+      { bx: x,        by: y-h*0.30, r: h*0.38 },
     ];
 
-    puffs.forEach(function(p) {
-      var grd = ctx.createRadialGradient(
-        x+p.dx - p.rx*0.15, y+p.dy - p.ry*0.2, p.ry*0.05,
-        x+p.dx, y+p.dy, Math.max(p.rx, p.ry)
-      );
-      grd.addColorStop(0,   'rgba(235,245,255,0.95)');
-      grd.addColorStop(0.5, 'rgba(210,228,248,0.85)');
-      grd.addColorStop(1,   'rgba(180,205,235,0)');
-      ctx.beginPath();
-      ctx.ellipse(x+p.dx, y+p.dy, p.rx, p.ry, 0, 0, Math.PI*2);
-      ctx.fillStyle = grd;
-      ctx.fill();
+    blobs.forEach(function(b) {
+      // Draw each blob as 3 concentric feathered layers for a truly soft look
+      var layers = [
+        { scale: 1.0,  alpha: 0.13 * c.opacity },
+        { scale: 0.72, alpha: 0.22 * c.opacity },
+        { scale: 0.44, alpha: 0.30 * c.opacity },
+        { scale: 0.22, alpha: 0.22 * c.opacity },
+      ];
+      layers.forEach(function(l) {
+        var r = b.r * l.scale;
+        var grd = ctx.createRadialGradient(b.bx, b.by, 0, b.bx, b.by, r);
+        grd.addColorStop(0,   'rgba(242,248,255,' + l.alpha + ')');
+        grd.addColorStop(0.4, 'rgba(228,240,252,' + (l.alpha*0.75) + ')');
+        grd.addColorStop(1,   'rgba(210,230,248,0)');
+        ctx.beginPath();
+        ctx.arc(b.bx, b.by, r, 0, Math.PI*2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+      });
     });
-
-    ctx.restore();
   }
 
   function drawSun(){
