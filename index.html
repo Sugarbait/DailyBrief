@@ -178,9 +178,143 @@
       .card { padding: 14px 12px; border-radius: 12px; }
       .header { padding: 20px 14px; border-radius: 12px; }
     }
+    /* ── Auth Gate ── */
+    #auth-gate {
+      position: fixed;
+      inset: 0;
+      background: #0f1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+    #auth-gate.hidden { display: none; }
+    .auth-box {
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .auth-logo { font-size: 48px; margin-bottom: 12px; }
+    .auth-title { font-size: 22px; font-weight: 700; color: #f7fafc; margin-bottom: 4px; }
+    .auth-sub { font-size: 13px; color: #718096; margin-bottom: 28px; }
+    .auth-input {
+      width: 100%;
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #e2e8f0;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .auth-input:focus { border-color: #63b3ed; }
+    .auth-input.error { border-color: #fc8181; }
+    .auth-btn {
+      width: 100%;
+      background: #2b6cb0;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-btn:hover { background: #2c5282; }
+    .auth-btn:active { background: #1a365d; }
+    .auth-error {
+      color: #fc8181;
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+    #main-content { display: none; }
+    #main-content.visible { display: block; }
   </style>
+  <script>
+    (function() {
+      var KEY = 'mb_auth';
+      var PASS = btoa(unescape(encodeURIComponent('$Ineed1millie$_daily')));
+      var EXPIRY_DAYS = 30;
+
+      function isAuthed() {
+        try {
+          var data = JSON.parse(localStorage.getItem(KEY));
+          if (!data) return false;
+          if (Date.now() > data.exp) { localStorage.removeItem(KEY); return false; }
+          return data.token === PASS;
+        } catch(e) { return false; }
+      }
+
+      function setAuthed() {
+        localStorage.setItem(KEY, JSON.stringify({
+          token: PASS,
+          exp: Date.now() + EXPIRY_DAYS * 86400000
+        }));
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        var gate = document.getElementById('auth-gate');
+        var content = document.getElementById('main-content');
+        var input = document.getElementById('auth-password');
+        var btn = document.getElementById('auth-btn');
+        var errMsg = document.getElementById('auth-error');
+
+        if (isAuthed()) {
+          gate.classList.add('hidden');
+          content.classList.add('visible');
+          return;
+        }
+
+        function tryLogin() {
+          var val = input.value;
+          if (btoa(unescape(encodeURIComponent(val))) === PASS) {
+            setAuthed();
+            gate.classList.add('hidden');
+            content.classList.add('visible');
+          } else {
+            input.classList.add('error');
+            errMsg.textContent = 'Incorrect password. Try again.';
+            input.value = '';
+            input.focus();
+            setTimeout(function() { input.classList.remove('error'); }, 1500);
+          }
+        }
+
+        btn.addEventListener('click', tryLogin);
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') tryLogin();
+        });
+        input.focus();
+      });
+    })();
+  </script>
 </head>
 <body>
+
+<!-- Auth Gate -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <div class="auth-logo">☀️</div>
+    <div class="auth-title">Good Morning, Mike</div>
+    <div class="auth-sub">Enter your password to view today's briefing</div>
+    <input type="password" id="auth-password" class="auth-input" placeholder="Password" autocomplete="current-password" />
+    <button id="auth-btn" class="auth-btn">Unlock Briefing</button>
+    <div id="auth-error" class="auth-error"></div>
+  </div>
+</div>
+
+<!-- Main Content (hidden until authed) -->
+<div id="main-content">
 <div class="container">
 
   <!-- Header -->
@@ -420,6 +554,7 @@
     Sources: Environment Canada · CBC Toronto · CP24 · CTV News · Xbox Wire · CoinDesk · BlockchainReporter
   </div>
 
-</div>
+</div><!-- end .container -->
+</div><!-- end #main-content -->
 </body>
 </html>
