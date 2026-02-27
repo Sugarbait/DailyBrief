@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="theme-color" content="#0f1117" />
-  <title>Morning Briefing – February 26, 2026</title>
+  <title>Morning Briefing – Friday, February 27, 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -398,7 +398,7 @@
 <!-- Auth Gate -->
 <div id="auth-gate">
   <div class="auth-box">
-    <div class="auth-logo">☀️</div>
+    <img src="logo.png" alt="Daily Brief" class="auth-logo-img" onerror="this.style.display='none'" />
     <div class="auth-title">Good Morning, Mike</div>
     <div class="auth-sub">Enter your password to view today's briefing</div>
     <input type="password" id="auth-password" class="auth-input" placeholder="Password" autocomplete="current-password" />
@@ -415,7 +415,7 @@
   <div class="header">
     <div class="greeting">Good Morning</div>
     <h1>☀️ Hey Mike!</h1>
-    <div class="date">Thursday, February 26, 2026 &nbsp;·&nbsp; 8:00 AM EST &nbsp;·&nbsp; Markham, ON</div>
+    <div class="date">Friday, February 27, 2026 &nbsp;·&nbsp; 8:00 AM EST &nbsp;·&nbsp; Markham, ON</div>
   </div>
 
   <!-- Weather -->
@@ -424,13 +424,13 @@
     <div class="weather-scene cloudy" id="weatherScene">
       <canvas class="weather-canvas" id="weatherCanvas"></canvas>
       <div class="weather-main">
-        <div class="weather-temp">-2°C</div>
+        <div class="weather-temp">-4°C</div>
         <div>
-          <div class="weather-condition">Mix of Sun &amp; Cloud</div>
+          <div class="weather-condition">Clouds</div>
           <div class="weather-meta">
-            Feels like -9°C &nbsp;·&nbsp; Wind: W 21 km/h, gusts 37 km/h<br/>
-            Humidity: 61% &nbsp;·&nbsp; Visibility: 16 km<br/>
-            High: -2°C &nbsp;·&nbsp; Tonight's Low: -15°C
+            Feels like -4°C &nbsp;·&nbsp; Wind: W 0 km/h, gusts 1 km/h<br/>
+            Humidity: 71% &nbsp;·&nbsp; Visibility: 10 km<br/>
+            High: -4°C &nbsp;·&nbsp; Tonight's Low: —°C
           </div>
         </div>
       </div>
@@ -439,359 +439,51 @@
       ⚠️ <strong>Cold weather advisory:</strong> Bundle up — coat, hat, gloves, and scarf advised. Risk of frostbite with prolonged outdoor exposure.
     </div>
     <div class="forecast-row">
-      <div class="forecast-day">
-        <div class="day-name">Today</div>
-        <div class="day-icon">🌤️</div>
-        <div class="day-high">-2°C</div>
-        <div class="day-low">-15°C</div>
-      </div>
-      <div class="forecast-day">
-        <div class="day-name">Fri</div>
-        <div class="day-icon">🌤️</div>
-        <div class="day-high">4°C</div>
-        <div class="day-low">0°C</div>
-      </div>
-      <div class="forecast-day">
-        <div class="day-name">Sat</div>
-        <div class="day-icon">🌨️</div>
-        <div class="day-high">3°C</div>
-        <div class="day-low">-11°C</div>
-      </div>
-      <div class="forecast-day">
-        <div class="day-name">Sun</div>
-        <div class="day-icon">❄️</div>
-        <div class="day-high">-7°C</div>
-        <div class="day-low">-16°C</div>
-      </div>
-      <div class="forecast-day">
-        <div class="day-name">Mon</div>
-        <div class="day-icon">⛅</div>
-        <div class="day-high">-6°C</div>
-        <div class="day-low">-12°C</div>
-      </div>
-      <div class="forecast-day">
-        <div class="day-name">Tue</div>
-        <div class="day-icon">🌨️</div>
-        <div class="day-high">0°C</div>
-        <div class="day-low">—</div>
-      </div>
     </div>
   </div>
 
   <!-- Toronto Local News -->
   <div class="card">
     <div class="card-title">🏙️ Toronto Local News</div>
-
-    <div class="news-item">
-      <div class="news-tag local">🏥 Health</div>
-      <div class="news-headline">Toronto General ranked 2nd best hospital in the world</div>
-      <div class="news-summary">Newsweek's annual global hospital rankings placed Toronto General Hospital second in the world, a major achievement for the city's healthcare system.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag local">⚖️ Courts</div>
-      <div class="news-headline">Frank Stronach sexual assault trial continues in Toronto court</div>
-      <div class="news-summary">A witness testified this week that trauma turned her into a "social recluse" following an alleged assault by billionaire Frank Stronach four decades ago.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag local">🕵️ City Hall</div>
-      <div class="news-headline">Toronto auditor general uncovers city employee fraud allegations</div>
-      <div class="news-summary">The city's auditor general flagged allegations including stolen packages, resold protective equipment, and employees abusing sick days to work second jobs.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag local">👮 Crime</div>
-      <div class="news-headline">Toronto police officers among 27 charged in organized crime probe</div>
-      <div class="news-summary">An alleged murder plot and extortion scheme has resulted in charges against 27 individuals, including several Toronto police officers.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag local">🚇 Transit</div>
-      <div class="news-headline">Ontario Line construction on track for early 2030s completion</div>
-      <div class="news-summary">The Ontario Line subway project continues its construction timeline, with completion targeted for the early 2030s as work progresses across the city.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag local">🏙️ Community</div>
-      <div class="news-headline">Mayor Chow presents Key to the City to author Itah Sadu</div>
-      <div class="news-summary">Mayor Olivia Chow honoured award-winning author and storyteller Itah Sadu for her lifelong contributions to Toronto's Black community and cultural landscape.</div>
-    </div>
   </div>
 
-  <!-- National & World News -->
+  <!-- World Headlines -->
   <div class="card">
-    <div class="card-title">📰 National &amp; World Headlines</div>
-
-    <div class="news-item">
-      <div class="news-tag">🇺🇸 U.S. Politics</div>
-      <div class="news-headline">Trump delivers 2026 State of the Union address</div>
-      <div class="news-summary">President Trump addressed Congress in his annual State of the Union, with a Democratic response from Gov. Spanberger and a "People's State of the Union" rally held simultaneously.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag">🌍 Trade</div>
-      <div class="news-headline">Trump's 10% global tariff takes effect — Canada watching closely</div>
-      <div class="news-summary">A sweeping 10% global tariff signed by President Trump has kicked in, rattling global markets and raising concerns for Canadian exporters.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag">🇺🇦 Ukraine</div>
-      <div class="news-headline">Russian drone strike kills 15 mineworkers in Dnipro</div>
-      <div class="news-summary">A Russian drone struck a minibus transporting workers in Dnipro, Ukraine, killing at least 15 people and injuring seven in one of the deadliest recent attacks.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag">🚀 Space</div>
-      <div class="news-headline">NASA Artemis II faces further delays — April launch possible</div>
-      <div class="news-summary">New complications may push the Artemis II lunar mission beyond its March 6 target, with engineers considering rolling the rocket back to the Vehicle Assembly Building.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag">🎵 Entertainment</div>
-      <div class="news-headline">Grammys: Kendrick Lamar makes history; Spielberg earns EGOT</div>
-      <div class="news-summary">Kendrick Lamar won five Grammys, surpassing Jay-Z as the most awarded hip-hop artist ever. Steven Spielberg became the 22nd competitive EGOT winner.</div>
-    </div>
-
-    <div class="news-item">
-      <div class="news-tag">🏈 Sports</div>
-      <div class="news-headline">Seattle Seahawks win Super Bowl; Walker III named MVP</div>
-      <div class="news-summary">The Seahawks defeated the Patriots 29–13. Kenneth Walker III was named MVP — the first running back to receive the honour in 28 years.</div>
-    </div>
+    <div class="card-title">🌍 World Headlines</div>
   </div>
 
   <!-- AI News -->
   <div class="card">
-    <div class="card-title">🤖 Trending AI News</div>
-
-    <!-- Western Labs -->
-    <div class="ai-item">
-      <div class="ai-badge western">🟠 Anthropic · Claude</div>
-      <div class="ai-title">Claude 4 (Opus 4 & Sonnet 4) launches — claims world's best coding model</div>
-      <div class="ai-body">Anthropic released Claude 4 with autonomous multi-hour task capability and top coding benchmarks. The company is targeting $15B in revenue for 2026, narrowing its valuation gap with OpenAI to roughly 2x.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge western">🟢 OpenAI · ChatGPT</div>
-      <div class="ai-title">ChatGPT Deep Research launches; OpenAI eyes $30B revenue in 2026</div>
-      <div class="ai-body">OpenAI rolled out Deep Research — an agent that browses the web for up to 30 minutes to produce cited reports. It also signed a Disney licensing deal for Sora video generation and hit $20B ARR.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge western">🔵 Google · Gemini</div>
-      <div class="ai-title">Gemini 3 Flash rolls out globally; Apple partners with Google for AI Siri</div>
-      <div class="ai-body">Google's Gemini 3 is receiving rave reviews and outperforming rivals in several benchmarks. Apple is integrating Google's 1.2 trillion parameter Gemini model into a new AI-powered Siri via Private Cloud Compute.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge western">⚫ xAI · Grok</div>
-      <div class="ai-title">Grok-3 launches; Musk merges SpaceX with xAI</div>
-      <div class="ai-body">Grok-3 arrives with enhanced reasoning and image analysis for X Premium+ users. Musk announced a SpaceX–xAI merger to embed Grok into spacecraft and Mars colony development. California AG demands xAI stop deepfake content generation.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge western">🟣 Mistral · Le Chat</div>
-      <div class="ai-title">Mistral's Le Chat generates up to 1,000 words per second</div>
-      <div class="ai-body">Mistral released Le Chat, an AI assistant boasting industry-leading inference speed of up to 1,000 words per second, alongside the open-weight Mistral 3 model release.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge western">🔷 Microsoft · Copilot</div>
-      <div class="ai-title">Copilot gets multi-agent orchestration; Microsoft faces ACCC lawsuit</div>
-      <div class="ai-body">Microsoft unveiled multi-agent Copilot at Build, allowing it to coordinate specialized AI agent teams. Meanwhile, Australia's ACCC sued Microsoft over a 45% price hike tied to Copilot bundling, affecting ~2.7M customers.</div>
-    </div>
-
-    <!-- Chinese Labs -->
-    <div class="ai-item">
-      <div class="ai-badge chinese">🌊 Moonshot AI · Kimi K2.5</div>
-      <div class="ai-title">Kimi K2.5 matches Claude Opus at 1/7th the price — 1 trillion parameters</div>
-      <div class="ai-body">Moonshot AI's Kimi K2.5 features a Mixture-of-Experts architecture with Agent Swarm tech — coordinating up to 100 AI sub-agents in parallel, cutting long-horizon task time by 4.5x. Moonshot became China's fastest decacorn.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge chinese">🔶 Alibaba · Qwen 3.5</div>
-      <div class="ai-title">Qwen 3.5 brings native multimodality at 1/18th the cost of Gemini Pro</div>
-      <div class="ai-body">Qwen3.5-Plus unifies vision and language in a single model at just $0.12/million input tokens. The Qwen family has overtaken Meta's Llama as the most downloaded model series on Hugging Face.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge chinese">🟦 MiniMax · M2.5</div>
-      <div class="ai-title">MiniMax M2.5 hits 3 trillion tokens in first 7 days — usage surges 197%</div>
-      <div class="ai-body">The world's first production-grade agent-native model launched February 13, priced at $0.30/million tokens (vs $5.00 for Claude Opus 4). MiniMax now leads OpenRouter with 2.45 trillion tokens processed.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge chinese">⬛ Z.AI · GLM-5</div>
-      <div class="ai-title">GLM-5 tops Artificial Analysis Intelligence Index as best open-weight model</div>
-      <div class="ai-body">Z.AI's GLM-5 focuses on autonomous software development — planning, coding, debugging, and iterating without human input. Launch demand was so high it overwhelmed infrastructure, forcing Z.AI to issue a public apology and throttle access.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge industry">⚖️ Industry · Controversy</div>
-      <div class="ai-title">Anthropic & OpenAI accuse DeepSeek, MiniMax, Moonshot of "industrial-scale" distillation</div>
-      <div class="ai-body">Anthropic alleges Chinese AI firms created 24,000+ fake accounts and used 16M+ Claude exchanges to train their models. OpenAI separately flagged "obfuscated" distillation of its frontier models to U.S. legislators. Chinese labs deny wrongdoing.</div>
-    </div>
-
-    <div class="ai-item">
-      <div class="ai-badge industry">📊 Industry · Market Share</div>
-      <div class="ai-title">Chinese LLMs now capture 61% of global token volume on OpenRouter</div>
-      <div class="ai-body">MiniMax M2.5, Kimi K2.5, and GLM-5 are the top 3 models by token usage globally. The AI race in 2026 is defined by massive investment ($200B+ from Amazon, $175B from Google, $145B from Microsoft) and a shift toward agentic AI.</div>
-    </div>
+    <div class="card-title">🤖 AI News & Updates</div>
   </div>
 
   <!-- Tech News -->
   <div class="card">
-    <div class="card-title">💻 Tech World News</div>
-
-    <div class="tech-item">
-      <div class="tech-badge apple">🍎 Apple</div>
-      <div class="tech-title">iPhone 17e, new iPads & MacBook dropping March 2–4 — 5 products in 3 days</div>
-      <div class="tech-body">Apple's first big 2026 launch wave hits next week. The iPhone 17e gets Dynamic Island, MagSafe, and a new chip. iOS 26.4 brings an upgraded Siri, with a deeper Google Gemini integration coming at WWDC in June. A foldable iPhone is also planned for later in 2026.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge nvidia">🟩 Nvidia</div>
-      <div class="tech-title">Nvidia's "Feynman" chip jumps to TSMC's 1.6nm A16 — leapfrogs Apple in line</div>
-      <div class="tech-body">Nvidia is set to skip 2nm entirely and go straight to TSMC's most advanced A16 process for its next-gen Feynman AI GPU, potentially edging out Apple as TSMC's top customer. RTX 50 series supply is also down 30–40% as Samsung and SK Hynix prioritize AI data center chips.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge samsung">🔷 Samsung</div>
-      <div class="tech-title">Samsung unveils Galaxy Book 6, creaseless foldable OLED & iPhone Fold display</div>
-      <div class="tech-body">At CES 2026, Samsung launched the Galaxy Book 6 with 30-hour battery life. Samsung Display debuted the brightest OLED panel yet and a creaseless foldable screen reportedly destined for Apple's upcoming foldable iPhone. Its Taylor, Texas fab begins 2026 risk production.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge intel">🔴 Intel</div>
-      <div class="tech-title">Intel ships first 18A chips from Arizona — Apple & Nvidia in foundry talks</div>
-      <div class="tech-body">Intel's Fab 52 in Chandler, AZ now makes the most advanced chips ever manufactured in the U.S. Apple and Nvidia are reportedly in talks to shift some chip production to Intel's 18A/14A nodes by 2028, driven by tariff risks and geopolitics. The Trump administration holds a 10% stake in Intel.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge amd">🔴 AMD</div>
-      <div class="tech-title">AMD launches Ryzen AI 400 series and FSR 4 with AI-powered upscaling</div>
-      <div class="tech-body">Lisa Su unveiled the Ryzen AI 400 at CES 2026, pushing AMD further into AI-powered PCs. FSR 4 brings machine learning-based image reconstruction to RDNA 3.5 cards, directly challenging Nvidia's DLSS 4.5 which now enables 4K path-tracing at 240 fps.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge tesla">⚡ Tesla</div>
-      <div class="tech-title">Tesla repurposes U.S. factory for Optimus robots — analysts call it Tesla's "iPhone moment"</div>
-      <div class="tech-body">Tesla is converting a major U.S. facility to full Optimus humanoid robot production. Analysts are comparing the potential impact to the iPhone's effect on Apple. Tesla CarPlay integration is delayed due to needed iOS 26 Maps changes from Apple's side.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge meta">🔵 Meta</div>
-      <div class="tech-title">Meta Ray-Ban Gen 2 AI glasses momentum builds alongside Apple's wearable AI push</div>
-      <div class="tech-body">Meta's Ray-Ban smart glasses continue gaining traction in the AI wearables race. The four big tech hyperscalers — Microsoft, Meta, Alphabet, and Amazon — are projected to spend over $470B on AI infrastructure in 2026, up from $350B in 2025.</div>
-    </div>
-
-    <div class="tech-item">
-      <div class="tech-badge general">🌐 Industry</div>
-      <div class="tech-title">Big Tech AI capex hits $470B in 2026 — returns now under the microscope</div>
-      <div class="tech-body">As AI infrastructure spending surges to record levels across Microsoft, Meta, Alphabet, and Amazon, Wall Street is shifting focus from "how much are you spending?" to "what are you getting back?" Pressure is mounting on all major players to show AI ROI.</div>
-    </div>
+    <div class="card-title">💻 Tech News & Updates</div>
   </div>
 
   <!-- Xbox News -->
   <div class="card">
-    <div class="card-title">🎮 Trending Xbox News</div>
-
-    <div class="xbox-item">
-      <div class="xbox-num">1</div>
-      <div>
-        <div class="xbox-title">February 2026 Xbox Update — 1440p Cloud Streaming Arrives</div>
-        <div class="xbox-desc">Game Pass Ultimate members can now stream at up to 1440p on Xbox Series X|S and Xbox One X/S. Update also adds new PC navigation sounds and ROG Xbox Ally improvements.</div>
-      </div>
-    </div>
-
-    <div class="xbox-item">
-      <div class="xbox-num">2</div>
-      <div>
-        <div class="xbox-title">Resident Evil Requiem launches today on Xbox Series X|S</div>
-        <div class="xbox-desc">The latest Resident Evil drops February 26, featuring FBI analyst Grace Ashcroft and Leon S. Kennedy in a new survival horror experience optimized for Xbox Series X|S.</div>
-      </div>
-    </div>
-
-    <div class="xbox-item">
-      <div class="xbox-num">3</div>
-      <div>
-        <div class="xbox-title">Game Pass: Kingdom Come II, Witcher 3, College Football 26 &amp; more</div>
-        <div class="xbox-desc">A stacked February wave brings Kingdom Come: Deliverance II, The Witcher 3 Complete Edition, and EA Sports College Football 26 to Game Pass, plus Avowed's New Game+ patch.</div>
-      </div>
-    </div>
-
-    <div class="xbox-item">
-      <div class="xbox-num">4</div>
-      <div>
-        <div class="xbox-title">Next-gen Xbox hardware teased — "announcements coming soon"</div>
-        <div class="xbox-desc">New Xbox head Asha Sharma hinted that next-gen console hardware announcements are "coming up very soon," generating major buzz in the gaming community.</div>
-      </div>
-    </div>
-
-    <div class="xbox-item">
-      <div class="xbox-num">5</div>
-      <div>
-        <div class="xbox-title">Marathon Server Slam open preview starts today</div>
-        <div class="xbox-desc">Bungie's Marathon kicks off its open preview weekend today (Feb 26–Mar 2) on Xbox Series X|S, PS5, and Steam with cross-play, ahead of its March 5 launch.</div>
-      </div>
-    </div>
+    <div class="card-title">🎮 Xbox & Gaming</div>
   </div>
 
-  <!-- XRP -->
+  <!-- XRP & Crypto -->
   <div class="card">
-    <div class="card-title">💰 XRP – Price &amp; News</div>
-
-    <div class="xrp-price-block">
-      <div class="xrp-logo">🪙</div>
-      <div>
-        <div class="xrp-price">$1.47 USD</div>
-        <div class="xrp-change">▲ +8.4% (24h) &nbsp;·&nbsp; High: $1.47 &nbsp;·&nbsp; Low: $1.34</div>
-        <div class="xrp-meta">
-          Market Cap: ~$89.2B &nbsp;·&nbsp; Rank: #4<br/>
-          Volume (24h): $3.82B &nbsp;·&nbsp; Supply: 61.02B XRP
-        </div>
-      </div>
-    </div>
-
-    <div class="xrp-news-item">
-      <div class="xrp-news-title">📉 February crash but XRP rebounds +8.4% today</div>
-      <div class="xrp-news-body">XRP crashed over 30% in February, briefly hitting $1.16 during "Black Sunday II." It's recovering strongly today as retail buying surges and ETF inflows hold at ~$1.1B in net assets.</div>
-    </div>
-
-    <div class="xrp-news-item">
-      <div class="xrp-news-title">🏦 Standard Chartered cuts 2026 target to $2.80 — raises 2030 target to $28</div>
-      <div class="xrp-news-body">The bank reduced its near-term XRP target by 65%, citing fading institutional enthusiasm, but raised its 2030 target implying nearly 19x upside from current levels.</div>
-    </div>
-
-    <div class="xrp-news-item">
-      <div class="xrp-news-title">📈 Analysts eye Q4 2026 bull run — Grok AI predicts $8 by year-end</div>
-      <div class="xrp-news-body">Multiple analysts are flagging bullish on-chain signals similar to the 2024 breakout. Most expect a full bull phase to begin in Q4 2026, with $8 as a realistic year-end target.</div>
-    </div>
-
-    <div class="xrp-news-item">
-      <div class="xrp-news-title">⚖️ SEC litigation officially over — XRP confirmed not a security</div>
-      <div class="xrp-news-body">The SEC and Ripple jointly dismissed all remaining appeals in August 2025, ending nearly 5 years of litigation. XRP confirmed as not a security on public exchanges.</div>
-    </div>
-
+    <div class="card-title">₿ XRP & Crypto Markets</div>
     <div class="crypto-disclaimer">
-      ⚠️ <strong>Disclaimer:</strong> Crypto prices are highly volatile. This is for informational purposes only and does not constitute financial or investment advice.
+      ⚖️ This briefing is for informational purposes only and should not be construed as financial advice. Crypto markets are volatile; do your own research (DYOR).
     </div>
   </div>
 
+  <!-- Footer -->
   <div class="footer">
-    Generated by Claude · Morning Briefing for Mike · February 26, 2026<br/><br/>
-    <strong style="color:#718096;">📚 Sources Used Today</strong><br/>
-    🌤️ <strong>Weather:</strong> Environment Canada · The Weather Network<br/>
-    🏙️ <strong>Toronto News:</strong> <a href="https://www.cp24.com" style="color:#63b3ed;">CP24</a> · <a href="https://www.cbc.ca/news/canada/toronto" style="color:#63b3ed;">CBC Toronto</a> · <a href="https://www.ctvnews.ca/toronto/" style="color:#63b3ed;">CTV News Toronto</a> · <a href="https://globalnews.ca/toronto/" style="color:#63b3ed;">Global News Toronto</a><br/>
-    📰 <strong>National &amp; World:</strong> <a href="https://www.theglobeandmail.com" style="color:#63b3ed;">Globe &amp; Mail</a> · <a href="https://www.bbc.com/news" style="color:#63b3ed;">BBC News</a> · <a href="https://www.reuters.com" style="color:#63b3ed;">Reuters</a> · <a href="https://apnews.com" style="color:#63b3ed;">AP News</a><br/>
-    🤖 <strong>AI News:</strong> <a href="https://www.theverge.com" style="color:#63b3ed;">The Verge</a> · <a href="https://techcrunch.com" style="color:#63b3ed;">TechCrunch</a> · <a href="https://www.wired.com" style="color:#63b3ed;">Wired</a> · <a href="https://venturebeat.com" style="color:#63b3ed;">VentureBeat</a> · <a href="https://www.technologyreview.com" style="color:#63b3ed;">MIT Tech Review</a> · <a href="https://www.cnbc.com" style="color:#63b3ed;">CNBC</a><br/>
-    💻 <strong>Tech World:</strong> <a href="https://www.theverge.com" style="color:#63b3ed;">The Verge</a> · <a href="https://arstechnica.com" style="color:#63b3ed;">Ars Technica</a> · <a href="https://www.tomshardware.com" style="color:#63b3ed;">Tom's Hardware</a> · <a href="https://9to5mac.com" style="color:#63b3ed;">9to5Mac</a> · <a href="https://www.macrumors.com" style="color:#63b3ed;">MacRumors</a><br/>
-    🎮 <strong>Xbox:</strong> <a href="https://news.xbox.com" style="color:#63b3ed;">Xbox Wire</a> · <a href="https://www.purexbox.com" style="color:#63b3ed;">Pure Xbox</a> · <a href="https://www.trueachievements.com" style="color:#63b3ed;">TrueAchievements</a><br/>
-    💰 <strong>XRP &amp; Crypto:</strong> <a href="https://www.coindesk.com" style="color:#63b3ed;">CoinDesk</a> · <a href="https://blockchainreporter.net" style="color:#63b3ed;">Blockchain Reporter</a> · <a href="https://cryptonews.com" style="color:#63b3ed;">CryptoNews</a> · <a href="https://thecryptobasic.com" style="color:#63b3ed;">The Crypto Basic</a> · <a href="https://coinmarketcap.com" style="color:#63b3ed;">CoinMarketCap</a>
+    <p>This briefing was automatically generated at 8:00 AM EST.</p>
+    <p>Weather data from OpenWeatherMap &nbsp;·&nbsp; News from NewsAPI &nbsp;·&nbsp; Crypto from CoinGecko</p>
   </div>
 
-</div><!-- end .container -->
-</div><!-- end #main-content -->
+</div>
+</div>
+
 
 <script>
 (function() {
@@ -1041,5 +733,6 @@
   animate();
 })();
 </script>
+
 </body>
 </html>
