@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0f1117" />
+  <title>Morning Briefing – {{TITLE_DATE}}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 16px 12px 48px;
+      line-height: 1.5;
+    }
+
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #1a1f2e 0%, #16213e 100%);
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .header .greeting {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #63b3ed;
+      margin-bottom: 6px;
+    }
+    .header h1 { font-size: clamp(22px, 6vw, 32px); font-weight: 700; color: #f7fafc; margin-bottom: 6px; }
+    .header .date { font-size: clamp(12px, 3vw, 15px); color: #a0aec0; }
+
+    /* ── Cards ── */
+    .card {
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 14px;
+      padding: 18px 16px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: clamp(15px, 4vw, 18px);
+      font-weight: 700;
+      color: #f7fafc;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2d3748;
+    }
+
+    /* ── Weather Scene ── */
+    .weather-scene {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 160px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    .weather-scene.sunny    { background: linear-gradient(135deg, #1a3a5c 0%, #1e4976 50%, #1a3a5c 100%); }
+    .weather-scene.cloudy   { background: linear-gradient(135deg, #1e2535 0%, #2d3a50 50%, #1e2535 100%); }
+    .weather-scene.snowing  { background: linear-gradient(135deg, #1a2030 0%, #1e2a40 50%, #1a2030 100%); }
+    .weather-scene.raining  { background: linear-gradient(135deg, #141e2e 0%, #1a2640 50%, #141e2e 100%); }
+    .weather-scene.stormy   { background: linear-gradient(135deg, #0a0e18 0%, #0e1420 50%, #0a0e18 100%); }
+    .weather-scene.foggy    { background: linear-gradient(135deg, #1e2535 0%, #2a3245 50%, #1e2535 100%); }
+    .weather-scene.windy    { background: linear-gradient(135deg, #1a2a1a 0%, #243024 50%, #1a2a1a 100%); }
+    .flash-overlay {
+      position: absolute; inset: 0;
+      background: white; opacity: 0;
+      pointer-events: none; z-index: 1;
+    }
+
+    /* Canvas sits behind everything */
+    .weather-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Content sits on top */
+    .weather-main {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .weather-temp {
+      font-size: clamp(52px, 14vw, 72px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      flex-shrink: 0;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    }
+    .weather-condition { font-size: clamp(15px, 4vw, 18px); font-weight: 600; color: #fff; margin-bottom: 4px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .weather-meta { font-size: clamp(12px, 3vw, 13px); color: rgba(255,255,255,0.75); line-height: 1.8; }
+    @media (max-width: 480px) {
+      .weather-main { flex-direction: column; align-items: center; text-align: center; }
+      .weather-temp { font-size: clamp(64px, 20vw, 80px); }
+      .weather-meta { text-align: center; }
+    }
+    .weather-alert {
+      background: #2d2020;
+      border: 1px solid #742a2a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: clamp(12px, 3vw, 13px);
+      color: #fc8181;
+      margin-bottom: 16px;
+    }
+    .forecast-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 500px) {
+      .forecast-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    .forecast-day {
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+    .forecast-day .day-name { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; margin-bottom: 4px; }
+    .forecast-day .day-icon { font-size: clamp(18px, 5vw, 22px); margin: 3px 0; }
+    .forecast-day .day-high { font-size: clamp(13px, 4vw, 16px); font-weight: 700; color: #63b3ed; }
+    .forecast-day .day-low { font-size: 11px; color: #718096; }
+
+    /* ── News items (shared) ── */
+    .news-item { padding: 13px 0; border-bottom: 1px solid #2d3748; }
+    .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .news-tag {
+      display: inline-block;
+      background: #2a4365;
+      color: #63b3ed;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .news-tag.local { background: #1a3a2a; color: #68d391; }
+    .news-headline { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
+    .news-summary { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
+    /* ── AI News ── */
+    .ai-item { padding: 13px 0; border-bottom: 1px solid #2d3748; }
+    .ai-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .ai-badge.western  { background: #2d1f4a; color: #b794f4; }
+    .ai-badge.chinese  { background: #1f2d3a; color: #63b3ed; }
+    .ai-badge.industry { background: #2a3a1f; color: #68d391; }
+    .ai-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
+    .ai-body  { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
+    /* ── Tech News ── */
+    .tech-item { padding: 13px 0; border-bottom: 1px solid #2d3748; }
+    .tech-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .tech-badge.apple   { background: #2a2a2a; color: #e2e8f0; }
+    .tech-badge.nvidia  { background: #1a2e1a; color: #76e4a6; }
+    .tech-badge.samsung { background: #1a1f3a; color: #90cdf4; }
+    .tech-badge.intel   { background: #2a1f1a; color: #fbb6ce; }
+    .tech-badge.amd     { background: #2d1a1a; color: #fc8181; }
+    .tech-badge.tesla   { background: #2a1a1a; color: #f6ad55; }
+    .tech-badge.meta    { background: #1a2040; color: #76e4f7; }
+    .tech-badge.general { background: #2a2a1a; color: #fefcbf; }
+    .tech-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 4px; line-height: 1.4; }
+    .tech-body  { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
+    /* ── Xbox ── */
+    .xbox-item { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid #2d3748; align-items: flex-start; }
+    .xbox-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .xbox-num {
+      background: #107C10;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .xbox-title { font-size: clamp(13px, 3.5vw, 15px); font-weight: 600; color: #e2e8f0; margin-bottom: 3px; line-height: 1.4; }
+    .xbox-desc { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+
+    /* ── XRP ── */
+    .xrp-price-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .xrp-logo { font-size: clamp(28px, 8vw, 38px); flex-shrink: 0; }
+    .xrp-price { font-size: clamp(28px, 8vw, 38px); font-weight: 700; color: #68d391; line-height: 1; }
+    .xrp-change { font-size: clamp(12px, 3.5vw, 14px); color: #68d391; font-weight: 600; margin-top: 4px; }
+    .xrp-meta { font-size: clamp(11px, 3vw, 13px); color: #a0aec0; line-height: 1.8; margin-top: 4px; }
+    .xrp-news-item { padding: 11px 0; border-bottom: 1px solid #2d3748; }
+    .xrp-news-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .xrp-news-title { font-size: clamp(13px, 3.5vw, 14px); font-weight: 600; color: #e2e8f0; margin-bottom: 3px; line-height: 1.4; }
+    .xrp-news-body { font-size: clamp(12px, 3vw, 13px); color: #a0aec0; line-height: 1.5; }
+    .crypto-disclaimer {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #1a2a1a;
+      border: 1px solid #276227;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #68d391;
+    }
+
+    /* ── Footer ── */
+    .footer { text-align: center; font-size: 11px; color: #4a5568; margin-top: 20px; line-height: 1.8; }
+
+    /* ── Tap targets for mobile ── */
+    @media (max-width: 480px) {
+      body { padding: 10px 8px 40px; }
+      .card { padding: 14px 12px; border-radius: 12px; }
+      .header { padding: 20px 14px; border-radius: 12px; }
+    }
+    /* ── Auth Gate ── */
+    #auth-gate {
+      position: fixed;
+      inset: 0;
+      background: #0f1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+    #auth-gate.hidden { display: none; }
+    .auth-box {
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .auth-logo { font-size: 48px; margin-bottom: 12px; }
+    .auth-title { font-size: 22px; font-weight: 700; color: #f7fafc; margin-bottom: 4px; }
+    .auth-sub { font-size: 13px; color: #718096; margin-bottom: 28px; }
+    .auth-input {
+      width: 100%;
+      background: #0f1117;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 16px;
+      color: #e2e8f0;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .auth-input:focus { border-color: #63b3ed; }
+    .auth-input.error { border-color: #fc8181; }
+    .auth-btn {
+      width: 100%;
+      background: #2b6cb0;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-btn:hover { background: #2c5282; }
+    .auth-btn:active { background: #1a365d; }
+    .auth-error {
+      color: #fc8181;
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+    #main-content { display: none; }
+    #main-content.visible { display: block; }
+  </style>
+  <script>
+    (function() {
+      var KEY = 'mb_auth';
+      var PASS = btoa(unescape(encodeURIComponent('$Ineed1millie$_daily')));
+      var EXPIRY_DAYS = 30;
+
+      function isAuthed() {
+        try {
+          var data = JSON.parse(localStorage.getItem(KEY));
+          if (!data) return false;
+          if (Date.now() > data.exp) { localStorage.removeItem(KEY); return false; }
+          return data.token === PASS;
+        } catch(e) { return false; }
+      }
+
+      function setAuthed() {
+        localStorage.setItem(KEY, JSON.stringify({
+          token: PASS,
+          exp: Date.now() + EXPIRY_DAYS * 86400000
+        }));
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        var gate = document.getElementById('auth-gate');
+        var content = document.getElementById('main-content');
+        var input = document.getElementById('auth-password');
+        var btn = document.getElementById('auth-btn');
+        var errMsg = document.getElementById('auth-error');
+
+        if (isAuthed()) {
+          gate.classList.add('hidden');
+          content.classList.add('visible');
+          return;
+        }
+
+        function tryLogin() {
+          var val = input.value;
+          if (btoa(unescape(encodeURIComponent(val))) === PASS) {
+            setAuthed();
+            gate.classList.add('hidden');
+            content.classList.add('visible');
+          } else {
+            input.classList.add('error');
+            errMsg.textContent = 'Incorrect password. Try again.';
+            input.value = '';
+            input.focus();
+            setTimeout(function() { input.classList.remove('error'); }, 1500);
+          }
+        }
+
+        btn.addEventListener('click', tryLogin);
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') tryLogin();
+        });
+        input.focus();
+      });
+    })();
+  </script>
+</head>
+<body>
+
+<!-- Auth Gate -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <img src="logo.png" alt="Daily Brief" class="auth-logo-img" onerror="this.style.display='none'" />
+    <div class="auth-title">Good Morning, Mike</div>
+    <div class="auth-sub">Enter your password to view today's briefing</div>
+    <input type="password" id="auth-password" class="auth-input" placeholder="Password" autocomplete="current-password" />
+    <button id="auth-btn" class="auth-btn">Unlock Briefing</button>
+    <div id="auth-error" class="auth-error"></div>
+  </div>
+</div>
+
+<!-- Main Content (hidden until authed) -->
+<div id="main-content">
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="greeting">Good Morning</div>
+    <h1>☀️ Hey Mike!</h1>
+    <div class="date">{{HEADER_DATE}}</div>
+  </div>
+
+  <!-- Weather -->
+  <div class="card">
+    <div class="card-title">🌡️ Weather – Markham, Ontario</div>
+    <div class="weather-scene {{WEATHER_CLASS}}" id="weatherScene">
+      <canvas class="weather-canvas" id="weatherCanvas"></canvas>
+      <div class="weather-main">
+        <div class="weather-temp">{{WEATHER_TEMP}}</div>
+        <div>
+          <div class="weather-condition">{{WEATHER_CONDITION}}</div>
+          <div class="weather-meta">{{WEATHER_META}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="weather-alert">
+      {{WEATHER_ALERT}}
+    </div>
+    <div class="forecast-row">
+      {{FORECAST_ROW}}
+    </div>
+  </div>
+
+  <!-- Toronto Local News -->
+  <div class="card">
+    <div class="card-title">🏙️ Toronto Local News</div>
+    {{TORONTO_NEWS}}
+  </div>
+
+  <!-- World Headlines -->
+  <div class="card">
+    <div class="card-title">🌍 World Headlines</div>
+    {{WORLD_NEWS}}
+  </div>
+
+  <!-- AI News -->
+  <div class="card">
+    <div class="card-title">🤖 AI News & Updates</div>
+    {{AI_NEWS}}
+  </div>
+
+  <!-- Tech News -->
+  <div class="card">
+    <div class="card-title">💻 Tech News & Updates</div>
+    {{TECH_NEWS}}
+  </div>
+
+  <!-- Xbox News -->
+  <div class="card">
+    <div class="card-title">🎮 Xbox & Gaming</div>
+    {{GAMING_NEWS}}
+  </div>
+
+  <!-- XRP & Crypto -->
+  <div class="card">
+    <div class="card-title">₿ XRP & Crypto Markets</div>
+    {{CRYPTO_CONTENT}}
+    <div class="crypto-disclaimer">
+      ⚖️ This briefing is for informational purposes only and should not be construed as financial advice. Crypto markets are volatile; do your own research (DYOR).
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>This briefing was automatically generated at {{FOOTER_TIME}}.</p>
+    <p>Weather data from OpenWeatherMap &nbsp;·&nbsp; News from NewsAPI &nbsp;·&nbsp; Crypto from CoinGecko</p>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+(function() {
+  var scene  = document.getElementById('weatherScene');
+  var canvas = document.getElementById('weatherCanvas');
+  if (!scene || !canvas) return;
+  var ctx  = canvas.getContext('2d');
+  var type = scene.classList.contains('snowing') ? 'snow'
+           : scene.classList.contains('raining') ? 'rain'
+           : scene.classList.contains('stormy')  ? 'storm'
+           : scene.classList.contains('sunny')   ? 'sun'
+           : scene.classList.contains('foggy')   ? 'fog'
+           : scene.classList.contains('windy')   ? 'windy'
+           : 'cloudy';
+
+  var W, H, particles=[], clouds=[], sunAngle=0, fogLayers=[], windLines=[], leaves=[], frame=0, raf;
+  var lightningInit = false;
+
+  /* ── Flash overlay for storm ── */
+  var flashEl = null;
+  if (type === 'storm') {
+    flashEl = document.createElement('div');
+    flashEl.style.cssText = 'position:absolute;inset:0;background:white;opacity:0;pointer-events:none;z-index:1;';
+    scene.appendChild(flashEl);
+  }
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function randInt(a,b){ return Math.floor(rand(a,b)); }
+
+  /* ── Lightning scheduler ── */
+  function scheduleLightning() {
+    setTimeout(function() {
+      triggerFlash();
+      scheduleLightning();
+    }, rand(2500, 9000));
+  }
+
+  function triggerFlash() {
+    drawBolt();
+    var flashes = randInt(1,4), t = 0;
+    for (var i=0; i<flashes; i++) {
+      (function(delay, isLast) {
+        setTimeout(function() {
+          if (flashEl) flashEl.style.opacity = rand(0.07, 0.2);
+          setTimeout(function() {
+            if (flashEl) flashEl.style.opacity = 0;
+            if (!isLast) setTimeout(drawBolt, 60);
+          }, rand(40,90));
+        }, delay);
+      })(t, i===flashes-1);
+      t += rand(80,180);
+    }
+  }
+
+  function drawBolt() {
+    ctx.save();
+    ctx.strokeStyle='rgba(200,225,255,0.95)'; ctx.lineWidth=rand(1.5,2.5);
+    ctx.shadowColor='#99ccff'; ctx.shadowBlur=18;
+    var lx=rand(W*0.15,W*0.85), ly=0;
+    ctx.beginPath(); ctx.moveTo(lx,ly);
+    while(ly<H*0.75){ lx+=rand(-18,18); ly+=rand(14,26); ctx.lineTo(lx,ly); }
+    ctx.stroke();
+    if (Math.random()>0.4) {
+      var bx=lx, by=ly*rand(0.3,0.6);
+      ctx.lineWidth=rand(0.8,1.5); ctx.globalAlpha=0.6;
+      ctx.beginPath(); ctx.moveTo(bx,by);
+      for(var s=0;s<randInt(2,5);s++){ bx+=rand(-16,16); by+=rand(10,20); ctx.lineTo(bx,by); }
+      ctx.stroke();
+    }
+    ctx.restore();
+    setTimeout(function(){ ctx.clearRect(0,0,W,H); }, rand(80,160));
+  }
+
+  function resize() {
+    W = canvas.width  = scene.offsetWidth;
+    H = canvas.height = scene.offsetHeight;
+    init();
+  }
+
+  function init() {
+    particles=[]; clouds=[]; fogLayers=[]; windLines=[]; leaves=[];
+
+    if (type==='snow') {
+      for(var i=0;i<120;i++) particles.push({x:rand(0,W),y:rand(0,H),r:rand(1.5,4),speed:rand(0.4,1.4),drift:rand(-0.3,0.3),opacity:rand(0.5,1)});
+      addClouds(3,0.25);
+    } else if (type==='rain') {
+      for(var i=0;i<140;i++) particles.push({x:rand(0,W),y:rand(-H,0),len:rand(12,24),speed:rand(4,8),opacity:rand(0.25,0.6)});
+      addClouds(4,0.38);
+    } else if (type==='storm') {
+      for(var i=0;i<200;i++) particles.push({x:rand(0,W),y:rand(-H,0),len:rand(14,28),speed:rand(7,13),opacity:rand(0.3,0.7)});
+      addClouds(5,0.45);
+      if (!lightningInit) { lightningInit=true; scheduleLightning(); }
+    } else if (type==='cloudy') {
+      addClouds(5,0.3);
+      for(var i=0;i<12;i++) fogLayers.push({x:rand(0,W),y:rand(0,H*0.6),r:rand(30,70),opacity:rand(0.03,0.08),speed:rand(0.1,0.3)});
+    } else if (type==='sun') {
+      addClouds(1,0.1);
+    } else if (type==='fog') {
+      for(var i=0;i<8;i++) fogLayers.push({x:rand(-100,W+100),y:rand(0,H),r:rand(100,200),opacity:rand(0.06,0.14),speed:rand(0.2,0.6)});
+    } else if (type==='windy') {
+      addClouds(2,0.2);
+      for(var i=0;i<18;i++) windLines.push({x:rand(-W*0.2,W*1.2),y:rand(0,H),len:rand(40,120),speed:rand(4,10),opacity:rand(0.06,0.18),width:rand(0.5,1.5),wave:rand(0,Math.PI*2),waveAmp:rand(2,8),waveFreq:rand(0.02,0.06)});
+      var leafColours=['#5a8a3a','#7ab548','#c8852a','#d4a030','#b84a1a','#8a6040'];
+      for(var i=0;i<22;i++) leaves.push({x:rand(-50,W),y:rand(0,H),size:rand(4,9),speed:rand(3,9),vy:rand(-1,1.5),angle:rand(0,Math.PI*2),spin:rand(-0.08,0.08),opacity:rand(0.6,1),wave:rand(0,Math.PI*2),waveAmp:rand(8,20),waveFreq:rand(0.02,0.05),colIdx:randInt(0,6)});
+    }
+  }
+
+  function addClouds(n,op){
+    for(var i=0;i<n;i++) clouds.push({x:rand(0,W),y:rand(10,H*0.5),w:rand(120,240),h:rand(40,80),speed:rand(0.15,0.4),opacity:op+rand(-0.05,0.05)});
+  }
+
+  function drawCloud(c){
+    var x=c.x, y=c.y, w=c.w, h=c.h;
+    var op=c.opacity;
+
+    // Large overlapping blobs — single ultra-soft gradient each, no concentric layers
+    var blobs = [
+      { bx: x-w*0.32, by: y+h*0.08, r: h*0.70 },
+      { bx: x-w*0.16, by: y+h*0.10, r: h*0.72 },
+      { bx: x,        by: y+h*0.08, r: h*0.76 },
+      { bx: x+w*0.16, by: y+h*0.10, r: h*0.72 },
+      { bx: x+w*0.32, by: y+h*0.08, r: h*0.70 },
+      { bx: x-w*0.24, by: y-h*0.10, r: h*0.62 },
+      { bx: x-w*0.08, by: y-h*0.16, r: h*0.66 },
+      { bx: x+w*0.08, by: y-h*0.16, r: h*0.66 },
+      { bx: x+w*0.24, by: y-h*0.10, r: h*0.62 },
+      { bx: x,        by: y-h*0.28, r: h*0.54 },
+    ];
+
+    blobs.forEach(function(b) {
+      var r = b.r;
+      var grd = ctx.createRadialGradient(b.bx, b.by, 0, b.bx, b.by, r);
+      // Single smooth falloff — very low peak alpha, fades completely by edge
+      // Extra intermediate stops make it cubic-smooth with zero visible banding
+      var pk = 0.09 * op;
+      grd.addColorStop(0,    'rgba(240,248,255,' + pk + ')');
+      grd.addColorStop(0.25, 'rgba(238,246,255,' + (pk*0.85) + ')');
+      grd.addColorStop(0.55, 'rgba(230,242,255,' + (pk*0.45) + ')');
+      grd.addColorStop(0.80, 'rgba(222,238,255,' + (pk*0.12) + ')');
+      grd.addColorStop(1,    'rgba(215,235,255,0)');
+      ctx.beginPath();
+      ctx.arc(b.bx, b.by, r, 0, Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+    });
+  }
+
+  function drawSun(){
+    var cx=W*0.82,cy=H*0.28,r=Math.min(W,H)*0.14;
+    sunAngle+=0.003;
+    ctx.save();
+    var grd=ctx.createRadialGradient(cx,cy,r*0.3,cx,cy,r*2.2);
+    grd.addColorStop(0,'rgba(255,220,80,0.22)'); grd.addColorStop(0.5,'rgba(255,190,50,0.08)'); grd.addColorStop(1,'rgba(255,180,40,0)');
+    ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(cx,cy,r*2.2,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(255,210,70,0.35)'; ctx.lineWidth=2;
+    for(var i=0;i<12;i++){
+      var a=sunAngle+i*Math.PI/6;
+      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r*1.15,cy+Math.sin(a)*r*1.15); ctx.lineTo(cx+Math.cos(a)*r*1.55,cy+Math.sin(a)*r*1.55); ctx.stroke();
+    }
+    var disc=ctx.createRadialGradient(cx-r*0.2,cy-r*0.2,r*0.05,cx,cy,r);
+    disc.addColorStop(0,'rgba(255,240,140,0.95)'); disc.addColorStop(1,'rgba(255,185,40,0.85)');
+    ctx.fillStyle=disc; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  var leafColours=['#5a8a3a','#7ab548','#c8852a','#d4a030','#b84a1a','#8a6040'];
+
+  function animate(){
+    frame++;
+    ctx.clearRect(0,0,W,H);
+
+    if(type==='sun'){
+      drawSun();
+      clouds.forEach(function(c){ c.x+=c.speed; if(c.x-c.w>W) c.x=-c.w; drawCloud(c); });
+    }
+    else if(type==='cloudy'){
+      ctx.save(); ctx.globalAlpha=0.18;
+      var sx=W*0.75,sy=H*0.2,sg=ctx.createRadialGradient(sx,sy,5,sx,sy,H*0.7);
+      sg.addColorStop(0,'rgba(255,220,100,1)'); sg.addColorStop(1,'rgba(255,220,100,0)');
+      ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(sx,sy,H*0.7,0,Math.PI*2); ctx.fill(); ctx.restore();
+      clouds.forEach(function(c){ c.x+=c.speed; if(c.x-c.w>W) c.x=-c.w; drawCloud(c); });
+    }
+    else if(type==='snow'){
+      clouds.forEach(function(c){ c.x+=c.speed; if(c.x-c.w>W) c.x=-c.w; drawCloud(c); });
+      particles.forEach(function(p){
+        p.x+=p.drift; p.y+=p.speed; if(p.y>H){ p.y=-p.r; p.x=rand(0,W); }
+        ctx.save(); ctx.globalAlpha=p.opacity; ctx.fillStyle='#ddeeff';
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      });
+    }
+    else if(type==='rain'){
+      clouds.forEach(function(c){ c.x+=c.speed*0.4; if(c.x-c.w>W) c.x=-c.w; drawCloud(c); });
+      particles.forEach(function(p){
+        p.y+=p.speed; p.x-=p.speed*0.22; if(p.y>H){ p.y=rand(-80,0); p.x=rand(0,W+60); }
+        ctx.save(); ctx.globalAlpha=p.opacity; ctx.strokeStyle='#90b8e0'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p.x-p.len*0.22,p.y+p.len); ctx.stroke(); ctx.restore();
+      });
+    }
+    else if(type==='storm'){
+      clouds.forEach(function(c){ c.x+=c.speed*0.5; if(c.x-c.w>W) c.x=-c.w; c.opacity=0.45+Math.sin(frame*0.02)*0.06; drawCloud(c); });
+      particles.forEach(function(p){
+        p.y+=p.speed; p.x-=p.speed*0.35; if(p.y>H){ p.y=rand(-80,0); p.x=rand(0,W+80); }
+        ctx.save(); ctx.globalAlpha=p.opacity; ctx.strokeStyle='#7aadcc'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p.x-p.len*0.35,p.y+p.len); ctx.stroke(); ctx.restore();
+      });
+    }
+    else if(type==='fog'){
+      fogLayers.forEach(function(f){
+        f.x+=f.speed; if(f.x-f.r>W) f.x=-f.r;
+        ctx.save(); ctx.globalAlpha=f.opacity;
+        var fg=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r);
+        fg.addColorStop(0,'rgba(180,195,215,1)'); fg.addColorStop(1,'rgba(180,195,215,0)');
+        ctx.fillStyle=fg; ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,Math.PI*2); ctx.fill(); ctx.restore();
+      });
+    }
+    else if(type==='windy'){
+      clouds.forEach(function(c){ c.x+=c.speed*2; if(c.x-c.w>W) c.x=-c.w; drawCloud(c); });
+      windLines.forEach(function(wl){
+        wl.x+=wl.speed; wl.wave+=wl.waveFreq*wl.speed;
+        if(wl.x>W+wl.len){ wl.x=-wl.len; wl.y=rand(0,H); wl.opacity=rand(0.06,0.18); }
+        var yOff=Math.sin(wl.wave)*wl.waveAmp;
+        ctx.save(); ctx.globalAlpha=wl.opacity; ctx.strokeStyle='#a0c8a0'; ctx.lineWidth=wl.width;
+        ctx.beginPath(); ctx.moveTo(wl.x,wl.y+yOff); ctx.lineTo(wl.x+wl.len,wl.y+yOff*0.5); ctx.stroke(); ctx.restore();
+      });
+      leaves.forEach(function(lf){
+        lf.x+=lf.speed; lf.wave+=lf.waveFreq*lf.speed;
+        lf.y+=lf.vy+Math.sin(lf.wave)*lf.waveAmp*0.05; lf.angle+=lf.spin;
+        if(lf.x>W+20){ lf.x=-20; lf.y=rand(0,H); }
+        if(lf.y<-20) lf.y=H+10; if(lf.y>H+20) lf.y=-10;
+        ctx.save(); ctx.globalAlpha=lf.opacity;
+        ctx.translate(lf.x,lf.y+Math.sin(lf.wave)*lf.waveAmp); ctx.rotate(lf.angle);
+        ctx.fillStyle=leafColours[lf.colIdx%leafColours.length];
+        ctx.beginPath();
+        ctx.moveTo(0,-lf.size); ctx.bezierCurveTo(lf.size*0.9,-lf.size*0.5,lf.size*0.9,lf.size*0.5,0,lf.size);
+        ctx.bezierCurveTo(-lf.size*0.9,lf.size*0.5,-lf.size*0.9,-lf.size*0.5,0,-lf.size); ctx.fill();
+        ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=0.6;
+        ctx.beginPath(); ctx.moveTo(0,-lf.size); ctx.lineTo(0,lf.size); ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    raf = requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', function(){ cancelAnimationFrame(raf); resize(); animate(); });
+  resize();
+  animate();
+})();
+</script>
+
+</body>
+</html>
