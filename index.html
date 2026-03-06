@@ -396,16 +396,11 @@
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;padding:0 12px}
 .container{max-width:680px!important;margin:0 auto!important;width:100%!important}
-/* Weather — preserve proper height, don't squish */
 .weather-scene{min-height:180px!important;padding:24px!important}
-.weather-temp{font-size:clamp(52px,14vw,72px)!important}
-/* News cards */
-.news-item,.ai-item,.tech-item,.xbox-item{width:100%!important;margin-bottom:20px!important;box-sizing:border-box!important}
+.news-item,.ai-item,.tech-item,.xbox-item{width:100%!important;margin-bottom:20px!important}
 .news-item img,.ai-item img,.tech-item img,.xbox-item img{width:100%!important;max-height:220px!important;object-fit:cover!important;border-radius:10px!important;display:block!important}
-/* Forecast — keep grid layout from template */
 .forecast-row{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:8px!important}
 @media(max-width:500px){.forecast-row{grid-template-columns:repeat(3,1fr)!important}}
-@media(max-width:600px){.xrp-price-block{flex-direction:column!important;align-items:center!important}}
 </style></head>
 <body>
 
@@ -429,7 +424,7 @@ body{margin:0;padding:0 12px}
   <div class="header">
     <div class="greeting">Good Morning</div>
     <h1>☀️ Hey Mike!</h1>
-    <div class="date">Friday, March 6, 2026 &nbsp;·&nbsp; 03:51 p.m. EST &nbsp;·&nbsp; Markham, ON</div>
+    <div class="date">Friday, March 6, 2026 &nbsp;·&nbsp; 04:00 p.m. EST &nbsp;·&nbsp; Markham, ON</div>
   </div>
 
   <!-- Weather -->
@@ -461,31 +456,31 @@ body{margin:0;padding:0 12px}
   <!-- Toronto Local News -->
   <div class="card">
     <div class="card-title">🏙️ Toronto Local News</div>
-    <p style="color:#888;padding:20px">No articles available.</p>
+    <p style="color:#888;padding:16px 0">No articles available.</p>
   </div>
 
   <!-- World Headlines -->
   <div class="card">
     <div class="card-title">🌍 World Headlines</div>
-    <p style="color:#888;padding:20px">No articles available.</p>
+    <p style="color:#888;padding:16px 0">No articles available.</p>
   </div>
 
   <!-- AI News -->
   <div class="card">
     <div class="card-title">🤖 AI News & Updates</div>
-    <p style="color:#888;padding:20px">No articles available.</p>
+    <p style="color:#888;padding:16px 0">No articles available.</p>
   </div>
 
   <!-- Tech News -->
   <div class="card">
     <div class="card-title">💻 Tech News & Updates</div>
-    <p style="color:#888;padding:20px">No articles available.</p>
+    <p style="color:#888;padding:16px 0">No articles available.</p>
   </div>
 
   <!-- Xbox News -->
   <div class="card">
     <div class="card-title">🎮 Xbox & Gaming</div>
-    <p style="color:#888;padding:20px">No articles available.</p>
+    <p style="color:#888;padding:16px 0">No articles available.</p>
   </div>
 
   <!-- XRP & Crypto -->
@@ -494,11 +489,11 @@ body{margin:0;padding:0 12px}
     
   <div class="xrp-price-block"><div class="xrp-logo">💧</div><div>
     <div class="xrp-price">$1.360 USD</div>
-    <div class="xrp-change">24h: <span style="color:#fc8181">▼ -4.08%</span> &nbsp;·&nbsp; CAD: $1.840</div>
-    <div class="xrp-meta">Market Cap: $83.02B</div>
+    <div class="xrp-change">24h: <span style="color:#fc8181">▼ -4.15%</span> &nbsp;·&nbsp; CAD: $1.850</div>
+    <div class="xrp-meta">Market Cap: $83.08B</div>
   </div></div>
-  <div class="xrp-news-item"><div class="xrp-news-title">₿ BTC &nbsp; $68,091 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -4.31%</span> &nbsp;·&nbsp; CAD: $92,452</div></div>
-  <div class="xrp-news-item"><div class="xrp-news-title">Ξ ETH &nbsp; $1,979.87 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -5.35%</span> &nbsp;·&nbsp; CAD: $2,688.24</div></div>
+  <div class="xrp-news-item"><div class="xrp-news-title">₿ BTC &nbsp; $68,120 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -4.41%</span> &nbsp;·&nbsp; CAD: $92,551</div></div>
+  <div class="xrp-news-item"><div class="xrp-news-title">Ξ ETH &nbsp; $1,979.72 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -5.42%</span> &nbsp;·&nbsp; CAD: $2,689.74</div></div>
     <div class="crypto-disclaimer">
       ⚖️ This briefing is for informational purposes only and should not be construed as financial advice. Crypto markets are volatile; do your own research (DYOR).
     </div>
@@ -506,7 +501,7 @@ body{margin:0;padding:0 12px}
 
   <!-- Footer -->
   <div class="footer">
-    <p>This briefing was automatically generated at 03:51 p.m. EST.</p>
+    <p>This briefing was automatically generated at 04:00 p.m. EST.</p>
     <p>Weather data from OpenWeatherMap &nbsp;·&nbsp; News from NewsAPI &nbsp;·&nbsp; Crypto from CoinGecko</p>
   </div>
 
