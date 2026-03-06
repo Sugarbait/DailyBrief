@@ -392,6 +392,82 @@
       });
     })();
   </script>
+
+<style>
+/* ── Mobile-first centering & layout ───────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body { margin: 0; padding: 0 12px; }
+
+.container {
+  max-width: 680px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* News cards — full width, centered */
+.news-item, .ai-item, .tech-item, .xbox-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Images inside cards */
+.news-item img, .ai-item img, .tech-item img, .xbox-item img {
+  width: 100% !important;
+  max-height: 220px !important;
+  object-fit: cover !important;
+  border-radius: 10px !important;
+  display: block !important;
+  margin-bottom: 10px !important;
+}
+
+/* Forecast row */
+.forecast-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+.forecast-day {
+  flex: 1 1 60px !important;
+  min-width: 50px !important;
+  text-align: center !important;
+}
+
+/* Sections — centered headings */
+.section-title, h2, h3 {
+  text-align: center !important;
+}
+
+/* Weather block */
+.weather-block {
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: center !important;
+}
+
+/* Crypto price block */
+.xrp-price-block {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* General full-width sections */
+.section, .card, .news-section {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Stack any flex rows on small screens */
+@media (max-width: 600px) {
+  .xbox-item > div { flex-direction: column !important; }
+  .xrp-price-block { flex-direction: column !important; align-items: center !important; }
+}
+</style>
 </head>
 <body>
 
@@ -415,7 +491,7 @@
   <div class="header">
     <div class="greeting">Good Morning</div>
     <h1>☀️ Hey Mike!</h1>
-    <div class="date">Friday, March 6, 2026 &nbsp;·&nbsp; 02:56 p.m. EST &nbsp;·&nbsp; Markham, ON</div>
+    <div class="date">Friday, March 6, 2026 &nbsp;·&nbsp; 03:02 p.m. EST &nbsp;·&nbsp; Markham, ON</div>
   </div>
 
   <!-- Weather -->
@@ -482,12 +558,12 @@
       <div class="xrp-logo">💧</div>
       <div>
         <div class="xrp-price">$1.360 USD</div>
-        <div class="xrp-change">24h: <span style="color:#fc8181">▼ -3.74%</span> &nbsp;·&nbsp; CAD: $1.850</div>
-        <div class="xrp-meta">Market Cap: $83.26B</div>
+        <div class="xrp-change">24h: <span style="color:#fc8181">▼ -3.52%</span> &nbsp;·&nbsp; CAD: $1.850</div>
+        <div class="xrp-meta">Market Cap: $83.31B</div>
       </div>
     </div>
-    <div class="xrp-news-item"><div class="xrp-news-title">₿ BTC &nbsp; $68,083 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -4.03%</span> &nbsp;·&nbsp; CAD: $92,465</div></div>
-    <div class="xrp-news-item"><div class="xrp-news-title">Ξ ETH &nbsp; $1,983.54 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -4.47%</span> &nbsp;·&nbsp; CAD: $2,693.91</div></div>
+    <div class="xrp-news-item"><div class="xrp-news-title">₿ BTC &nbsp; $68,160 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -3.96%</span> &nbsp;·&nbsp; CAD: $92,601</div></div>
+    <div class="xrp-news-item"><div class="xrp-news-title">Ξ ETH &nbsp; $1,984.65 USD</div><div class="xrp-news-body">24h: <span style="color:#fc8181">▼ -4.36%</span> &nbsp;·&nbsp; CAD: $2,696.29</div></div>
     <div class="crypto-disclaimer">
       ⚖️ This briefing is for informational purposes only and should not be construed as financial advice. Crypto markets are volatile; do your own research (DYOR).
     </div>
@@ -495,7 +571,7 @@
 
   <!-- Footer -->
   <div class="footer">
-    <p>This briefing was automatically generated at 02:56 p.m. EST.</p>
+    <p>This briefing was automatically generated at 03:02 p.m. EST.</p>
     <p>Weather data from OpenWeatherMap &nbsp;·&nbsp; News from NewsAPI &nbsp;·&nbsp; Crypto from CoinGecko</p>
   </div>
 
